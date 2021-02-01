@@ -17,7 +17,9 @@ return
       Bot.getProperty( libPrefix + 'secretpin')
     )
 
-    if(pin!=''){ pin = '&pin=' + pin }
+    if(pin!=''){ pin = '&pin=' + pin }else{
+throw 'Setup Secret Pin First'
+return}
   }
   return 'api_key=' + apiKey + pin;
 }
