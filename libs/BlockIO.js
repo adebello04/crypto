@@ -5,6 +5,10 @@ function getCredential(options, prms){
   let apiKey = ( prms.api_key ? prms.api_key : 
     Bot.getProperty( libPrefix + options.coin.toLowerCase() + 'apikey')
   );
+if(!apiKey){
+   throw 'You Need To set APi Key For this Coin'
+return
+}
   
   let pin = '';
   if(options.method.indexOf('withdraw') + 1) {
