@@ -57,6 +57,7 @@ function onApiResponse(){
     Bot.runCommand(user_callback_cmd, json.data);
   }else{
     let user_callback_err_cmd = arr[arr.length-1];
+Bot.sendMessage(user_callback_err_cmd)
     Bot.runCommand(user_callback_err_cmd, json);
   }
 }
