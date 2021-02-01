@@ -23,10 +23,13 @@ function apiGet(options = {}, prms){
 
   let callbacks = getCallbacks(prms, 'on_' + options.method);
   let credential = getCredential(options, prms);
+let url;
+let para = options.query
+let arr = para.split('onSuccess')
+let query = arr[0]
 
-  let url = API_URL + options.method + '?' + credential + 
-    '&' + options.query;
-  
+   url = API_URL + options.method + '?' + credential+'&'+query
+
   HTTP.get( {
     url: url,
     success: callbacks.onSuccess,
@@ -86,7 +89,7 @@ function getCallbacks(prms, successKey){
 }
 
 function snakeToCamel(string) {
-  return string.replace(/(_w)/g, function(m){
+  return string.replace(/(_\w)/g, function(m){
       return m[1].toUpperCase();
   });
 }
@@ -96,10 +99,9 @@ function doApiGetFor(coin, method, prms){
   let i = 0;
   let keys = Object.keys(prms);
   for(let ind in prms){
-    query+= keys[i] + '=' + prms[ind] + '&' 
+    query+= keys[i] + '=' + prms[ind]
     i+=1;
   }
-
   apiGet( { method: method, coin: coin, query: query}, prms);
 }
 
@@ -159,4 +161,4 @@ publish({
   Dogecoin: getMethodsForCoin('Dogecoin'),
 })
 
-on(libPrefix + 'callback', onApiResponse);
+on(libPrefix + 'callback', onApiResponse)
