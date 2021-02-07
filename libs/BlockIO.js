@@ -29,11 +29,15 @@ function apiGet(options = {}, prms){
 
   let callbacks = getCallbacks(prms, 'on_' + options.method);
   let credential = getCredential(options, prms);
-let url;
+let url, arr, query;
 let para = options.query
-let arr = para.split('onSuccess')
-let query = arr[0]
-
+if(para.includes('onSuccess'){
+arr = para.split('onSuccess')
+query = arr[0]
+}else{
+throw new Error('You need to set onSuccess Callback command in Api request')
+return
+}
    url = API_URL + options.method + '?' + credential+'&'+query
 
   HTTP.get( {
@@ -57,7 +61,6 @@ function onApiResponse(){
     Bot.runCommand(user_callback_cmd, json.data);
   }else{
     let user_callback_err_cmd = arr[arr.length-1];
-Bot.sendMessage(user_callback_err_cmd)
     Bot.runCommand(user_callback_err_cmd, json);
   }
 }
@@ -65,6 +68,8 @@ Bot.sendMessage(user_callback_err_cmd)
 function onApiError(){
   let json;
   let user_callback_cmd = params.split(' ')[0];
+  
+
 
   if(content){
     json = JSON.parse(content);
